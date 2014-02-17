@@ -1,5 +1,12 @@
 <?php
 
+# Connect to PostgreSQL database
+$conn = pg_connect("dbname='mapugee' user='y' password='x' host='0.0.0.0'");
+if (!$conn) {
+    echo "Not connected : ".pg_error();
+    exit;
+}
+
 function escapeJsonString($value) {
     # list from www.json.org: (\b backspace, \f formfeed)
     $escapers = array("\\", "/", "\"", "\n", "\r", "\t", "\x08", "\x0c");
@@ -12,6 +19,7 @@ function wrapArg($arg){
     return "'".$arg."'";
 }
 
+# escape Arguments
 if($_GET['cofr']){
     $cofr = wrapArg(pg_escape_string($_GET['cofr']));
 }
@@ -50,21 +58,6 @@ else if($country){
 }
 else if($countries){
     $sql = "SELECT code, st_asgeojson(countries.the_geom) AS geojson FROM countries WHERE code IN(".$countries.")";
-}
-
-
-# Connect to PostgreSQL database
-$conn = pg_connect("dbname='mapugee' user='y' password='x' host='0.0.0.0'");
-if (!$conn) {
-    echo "Not connected : ".pg_error();
-    exit;
-}
-
-# Try query or error
-$rs = pg_query($conn, $sql);
-if (!$rs) {
-    echo "An SQL error occured.\n";
-    exit;
 }
 
 # Try query or error
