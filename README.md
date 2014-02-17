@@ -9,6 +9,15 @@ The application is based on D3, TopoJSON, jQuery and jQueryUI.
 A database server and php is needed to serve the UNHCR database.
 Use grunt to build a working copy. 
 
+Features at current stage:
+
+ * Complete integration of the official UNHCR database.
+ * Tools for tempo-spatial subsets.
+ * Various tools to filter the data displayed on the map.
+ * Different map-projections.
+ * Animation with adjustable speed.
+
+Best performance in a recent version of chrome.
 A working demo is available [here](http://mapugee.boeppe.eu/)
 
 ![Screenshots](https://raw.github.com/buddebej/refugeemap/master/screenshots/screenshot01.png) 
