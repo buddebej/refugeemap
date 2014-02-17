@@ -8,25 +8,48 @@ function escapeJsonString($value) {
     return $result;
 }
 
+function wrapArg($arg){
+    return "'".$arg."'";
+}
 
-# queries
-if($_GET['cofr'] && $_GET['year'] && $_GET['continent'] != "'AL'"){
-    $sql = "SELECT unhcr.orig_country_code as code, unhcr.total_pop, st_asgeojson(countries.the_geom) AS geojson FROM countries RIGHT JOIN unhcr ON countries.code = unhcr.orig_country_code WHERE countries.continent = ".$_GET['continent']." AND unhcr.orig_country_code <> 'XXX' AND unhcr.orig_country_code <> ".$_GET['cofr']." AND unhcr.country_code = ".$_GET['cofr']." AND year=".$_GET['year']." UNION SELECT code,".$_GET['year'].",st_asgeojson(the_geom) AS geojson FROM countries WHERE code =".$_GET['cofr']; #UNION haengt noch die Position des Flow Ursprungslandes und das aktuelle Jahr an (fuer die Buffer Erstellung)
+if($_GET['cofr']){
+    $cofr = wrapArg(pg_escape_string($_GET['cofr']));
 }
-else if($_GET['cofo'] && $_GET['year'] && $_GET['continent'] != "'AL'"){
-    $sql = "SELECT unhcr.country_code as code, unhcr.total_pop, st_asgeojson(countries.the_geom) AS geojson FROM countries RIGHT JOIN unhcr ON countries.code = unhcr.country_code WHERE countries.continent = ".$_GET['continent']." AND unhcr.country_code <> 'XXX' AND unhcr.country_code <> ".$_GET['cofo']." AND unhcr.orig_country_code = ".$_GET['cofo']." AND year=".$_GET['year']." UNION SELECT code,".$_GET['year'].",st_asgeojson(the_geom) AS geojson FROM countries WHERE code = ".$_GET['cofo'];
+if($_GET['cofo']){
+    $cofo = wrapArg(pg_escape_string($_GET['cofo']));
 }
-else if($_GET['cofr'] && $_GET['year'] && $_GET['continent'] == "'AL'"){
-    $sql = "SELECT unhcr.orig_country_code as code, unhcr.total_pop, st_asgeojson(countries.the_geom) AS geojson FROM countries RIGHT JOIN unhcr ON countries.code = unhcr.orig_country_code WHERE unhcr.orig_country_code <> 'XXX' AND unhcr.orig_country_code <> ".$_GET['cofr']." AND unhcr.country_code = ".$_GET['cofr']." AND year=".$_GET['year']." UNION SELECT code,".$_GET['year'].",st_asgeojson(the_geom) AS geojson FROM countries WHERE code =".$_GET['cofr']; #UNION haengt noch die Position des Flow Ursprungslandes und das aktuelle Jahr an (fuer die Buffer Erstellung)
+if($_GET['year']){
+    $year = wrapArg(pg_escape_string($_GET['year']));
 }
-else if($_GET['cofo'] && $_GET['year'] && $_GET['continent'] == "'AL'"){
-    $sql = "SELECT unhcr.country_code as code, unhcr.total_pop, st_asgeojson(countries.the_geom) AS geojson FROM countries RIGHT JOIN unhcr ON countries.code = unhcr.country_code WHERE unhcr.country_code <> 'XXX' AND unhcr.country_code <> ".$_GET['cofo']." AND unhcr.orig_country_code = ".$_GET['cofo']." AND year=".$_GET['year']." UNION SELECT code,".$_GET['year'].",st_asgeojson(the_geom) AS geojson FROM countries WHERE code = ".$_GET['cofo'];
+if($_GET['continent']){
+    $continent =wrapArg(pg_escape_string($_GET['continent']));
 }
-else if($_GET['country']){
-    $sql = "SELECT code, st_asgeojson(countries.the_geom) AS geojson FROM countries WHERE code =".$_GET['country'];
+if($_GET['country']){
+    $country = wrapArg(pg_escape_string($_GET['country']));
 }
-else if($_GET['countries']){
-    $sql = "SELECT code, st_asgeojson(countries.the_geom) AS geojson FROM countries WHERE code IN(".$_GET['countries'].")";
+if($_GET['countries']){
+    $countries = wrapArg(pg_escape_string($_GET['countries']));
+}
+
+
+# Queries
+if($cofr && $year && $continent != "'AL'"){
+    $sql = "SELECT unhcr.orig_country_code as code, unhcr.total_pop, st_asgeojson(countries.the_geom) AS geojson FROM countries RIGHT JOIN unhcr ON countries.code = unhcr.orig_country_code WHERE countries.continent = ".$continent." AND unhcr.orig_country_code <> 'XXX' AND unhcr.orig_country_code <> ".$cofr." AND unhcr.country_code = ".$cofr." AND year=".$year." UNION SELECT code,".$year.",st_asgeojson(the_geom) AS geojson FROM countries WHERE code =".$cofr; 
+}
+else if($cofo && $year && $continent != "'AL'"){
+    $sql = "SELECT unhcr.country_code as code, unhcr.total_pop, st_asgeojson(countries.the_geom) AS geojson FROM countries RIGHT JOIN unhcr ON countries.code = unhcr.country_code WHERE countries.continent = ".$continent." AND unhcr.country_code <> 'XXX' AND unhcr.country_code <> ".$cofo." AND unhcr.orig_country_code = ".$cofo." AND year=".$year." UNION SELECT code,".$year.",st_asgeojson(the_geom) AS geojson FROM countries WHERE code = ".$cofo;
+}
+else if($cofr && $year && $continent == "'AL'"){
+    $sql = "SELECT unhcr.orig_country_code as code, unhcr.total_pop, st_asgeojson(countries.the_geom) AS geojson FROM countries RIGHT JOIN unhcr ON countries.code = unhcr.orig_country_code WHERE unhcr.orig_country_code <> 'XXX' AND unhcr.orig_country_code <> ".$cofr." AND unhcr.country_code = ".$cofr." AND year=".$year." UNION SELECT code,".$year.",st_asgeojson(the_geom) AS geojson FROM countries WHERE code =".$cofr; 
+}
+else if($cofo && $year && $continent == "'AL'"){
+    $sql = "SELECT unhcr.country_code as code, unhcr.total_pop, st_asgeojson(countries.the_geom) AS geojson FROM countries RIGHT JOIN unhcr ON countries.code = unhcr.country_code WHERE unhcr.country_code <> 'XXX' AND unhcr.country_code <> ".$cofo." AND unhcr.orig_country_code = ".$cofo." AND year=".$year." UNION SELECT code,".$year.",st_asgeojson(the_geom) AS geojson FROM countries WHERE code = ".$cofo;
+}
+else if($country){
+    $sql = "SELECT code, st_asgeojson(countries.the_geom) AS geojson FROM countries WHERE code =".$country;
+}
+else if($countries){
+    $sql = "SELECT code, st_asgeojson(countries.the_geom) AS geojson FROM countries WHERE code IN(".$countries.")";
 }
 
 
