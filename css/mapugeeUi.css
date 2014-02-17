@@ -1,0 +1,277 @@
+body,html {
+    background: url('../img/texbg-2.png') #31373D;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width:100%; 
+}
+
+.controlPanel{
+    top:1em;
+    left:1em;
+    width:403px;
+    opacity:0.95;
+    font-family: Verdana;
+    font-size: 7pt;
+    color:#666;
+}
+
+.controls{
+    border-right: 4px solid #ffae31;  
+    border-left: 4px solid #ffae31;  
+    background: #fff;
+    padding-bottom: 1em;
+}
+
+.controlPanelHeader{
+    background-color: #ffae31;
+    opacity: 1;
+    padding:1em;
+    padding-top: 0.5em;    
+    padding-bottom: 0.5em;
+    color: #fff;
+}
+
+.controlPanelHeader p{
+    margin: 0;
+    font-weight: bolder;
+    font-size: 1.2em;
+}
+
+.controlPanelFooter{
+    background-color: #ffae31;
+    opacity: 1;
+    padding:1em;
+    padding-top:0.1em;
+    color: #fff;
+    bottom:0;
+}
+
+.controler {
+    padding:1em;
+    padding-right:0em;    
+}
+
+.controler p{
+    line-height: 1.3em;
+    margin: 0;
+    font-size: 7.5pt;
+}
+
+.controler .seperator{
+    border-bottom: 1px solid #ccc;
+    background-color: #e9e9e9;
+    margin-bottom: 1em;
+    margin-top: 0;
+    font-size: 1.2em;
+    padding: 0.4em;
+}
+
+.floatBox {
+    float:left;
+
+}
+
+.clearFloat {
+    clear:both;
+}
+
+.centered{
+    text-align: center;
+    margin:auto;
+    text-align: center;
+    width: 100%;
+}
+
+.icon{
+    position: absolute;
+    vertical-align: middle;
+    text-align: right;
+    right:0;
+}
+
+.actrl{
+    background-color: #ccc;
+    margin:0.2em;
+    padding:0.2em;
+}
+
+input, select {
+    color:#666;
+    font-size: 8pt;
+    padding:0.3em;
+    border:1px #ccc solid;
+}
+.selectCountry{
+    width:10em;
+}
+
+.selectContinent{
+    width:10em;
+}
+.selectProjection{
+    width:23em;
+}
+
+.filterThreshold{
+    width:10em;
+    margin:0.4em;
+    margin-left:0;
+}
+
+.filter{
+    padding-top:0;
+}
+
+.legendBar {
+    margin-bottom:1em;
+    width:8em;
+    display:block;
+}
+
+.legendBarText{
+    margin-left: 1.3em;
+}
+
+.logo{
+    height:60px;
+    padding-left:25px;
+}
+
+.uiText{
+    font-weight: bolder;
+    font-size: 1.4em;
+    margin-right:0.4em;
+}
+
+.mapContainer {
+    border: 0;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    overflow: hidden;
+}
+
+.yearHud{
+    position: absolute;
+    right:0;
+    bottom:0;
+    font-size: 40pt;
+    font-weight: bolder;
+    font-family: Arial;
+    color:#fff;
+    text-align: center;
+    padding:0.3em;
+    padding-top:0.1em;
+    padding-bottom:0.1em;    
+    background-color: #000;
+    opacity: 0.5;
+}
+
+.sliderYear{
+    padding-left: 1%;
+    padding-top:0.2em;
+    width:7%;
+}
+
+.sliderSpeed {
+    height:6em !important;
+    margin-left:1em;
+}
+
+.ctrlComment{
+    margin-top: 1.5em;
+    text-align: right;
+}
+
+.ui-slider-horizontal {
+    height:8px;
+    width:88%;
+    margin-left:4%;
+}
+
+.ui-slider-horizontal .ui-slider-handle {
+    height:8px;
+    width:8px;
+}
+
+.ui-slider-handle img{border:none}
+
+
+.projectionIcon{
+    width:50px;
+}
+
+ /* http://docs.jquery.com/UI/Autocomplete#theming*/
+.ui-autocomplete { position: absolute; cursor: default; background:#CCC }   
+
+/* workarounds */
+html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% in IE6 */
+.ui-menu {
+    list-style:none;
+    padding: 2px;
+    margin: 0;
+    display:block;
+    float: left;
+}
+.ui-menu .ui-menu {
+    margin-top: -3px;
+}
+.ui-menu .ui-menu-item {
+    margin:0;
+    padding: 0;
+    zoom: 1;
+    float: left;
+    clear: left;
+    font-size: 7pt;
+
+    width: 100%;
+}
+.ui-menu .ui-menu-item a {
+    text-decoration:none;
+    display:block;
+    padding:.2em .4em;
+    line-height:1.5;
+    font-size: 7pt;
+    zoom:1;
+
+}
+.ui-menu .ui-menu-item a.ui-state-hover,
+.ui-menu .ui-menu-item a.ui-state-active {
+    font-weight: normal;
+    font-size: 7pt;
+    margin: -1px;
+}
+
+.graph{
+   width:100%;
+}
+
+rect {
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.hover{
+    fill: #F4A731;
+}
+
+.axis {
+  font: 7.5pt sans-serif;
+  font-color: #ccc;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #ccc;
+  shape-rendering: crispEdges;
+}
+.x.axis {
+  display: none;
+}
+.y.axis path {
+  display: none;
+}

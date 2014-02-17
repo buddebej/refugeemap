@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="./js/mapugee.min.js"></script>
+    <!--<script src="./src/lib/d3.min.js"></script>
+    <script src="./src/lib/topojson.min.js"></script>
+    <script src="./src/lib/jquery.min.js"></script>
+    <script src="./src/lib/jquery-ui.min.js"></script>
+    <script src="./src/Mapugee.js"></script>
+    <script src="./src/MapugeeChart.js"></script>
+    <script src="./src/initUi.js"></script>
+    <script src="./src/initMap.js"></script>
+    <script src="./data/names.js"></script> -->
+    <link href="./css/loadingAnimation.css" rel="stylesheet" />
+    <link href="./css/mapugeeUi.css" rel="stylesheet" />
+    <link href="./css/mapugeeMapstyle.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <title>Studienprojekt WS 2013/2014 Stolle/Buddeberg</title>
+</head>
+
+<body>
+    <div class="loader_container">
+        <div id="followingBallsG">
+            <div id="followingBallsG_1" class="followingBallsG">
+            </div>
+            <div id="followingBallsG_2" class="followingBallsG">
+            </div>
+            <div id="followingBallsG_3" class="followingBallsG">
+            </div>
+            <div id="followingBallsG_4" class="followingBallsG">
+            </div>
+        </div>
+    </div>
+
+    <div class="mapContainer"></div>
+
+    <div class="controlPanel">
+        <div class="controlPanelHeader">
+            <div class="floatBox">
+                <p>Tempo-Spatial Map: UNHCR Population Statistics</p>
+            </div>
+            <div class="floatBox icon">
+                <span class="ui-icon ui-icon-minus"></span>
+            </div>
+            <div class="clearFloat"></div>
+        </div>
+
+        <div class="controls">
+
+            <div class="controler">
+                <div class="floatBox uiText mode">Please select a country.</div>
+                <div class="floatBox uiText name"></div>
+                <div class="floatBox uiText year"></div>
+                <div class="floatBox uiText total"></div>
+                <div class="clearFloat"></div>
+
+                <div class="timeControl">
+                    <div class="graphCountry"></div>
+                    <div class="floatBox sliderYear">2001</div>
+                    <div class="floatBox sliderYear">2002</div>
+                    <div class="floatBox sliderYear">2003</div>
+                    <div class="floatBox sliderYear">2004</div>
+                    <div class="floatBox sliderYear">2005</div>
+                    <div class="floatBox sliderYear">2006</div>
+                    <div class="floatBox sliderYear">2007</div>
+                    <div class="floatBox sliderYear">2008</div>
+                    <div class="floatBox sliderYear">2009</div>
+                    <div class="floatBox sliderYear">2010</div>
+                    <div class="floatBox sliderYear">2011</div>
+                    <div class="floatBox sliderYear">2012</div>
+                    <div class="clearFloat"></div>
+                    <div class="yearSlider"></div>
+                </div>
+            </div>
+
+            <div class="controler arrowStats">
+                <div class="seperator ">
+                    <div class="floatBox migrationPath"></div>
+                    <div class="floatBox closePathStats">&nbsp;&nbsp;&nbsp;[close]</div>
+                    <div class="clearFloat"></div>
+                </div>
+                <div class="graphPath"></div>
+            </div>
+
+            <div class="floatBox timeControl controler">
+                <div class="seperator">Animation</div>
+                <div class="floatBox">
+                    <div class="floatBox actrl play">
+                        <span class="ui-icon ui-icon-play"></span>
+                    </div>
+
+                    <div class="floatBox actrl pause">
+                        <span class="ui-icon ui-icon-pause"></span>
+                    </div>
+                    <div class="clearFloat"></div>
+                    <div class="ctrlComment">Adjust
+                        <br>Speed</div>
+                </div>
+                <div class="floatBox">
+                    <div class="sliderSpeed"></div>
+                </div>
+                <div class="clearFloat"></div>
+            </div>
+
+            <div class="floatBox controler">
+                <div class="seperator">Migration</div>
+                <img id="mode-cofr" class="mode-toggle" src="img/icon-cofr.png" title="Toggle Map Mode"></img>
+                <img id="mode-cofo" class="mode-toggle" src="img/icon-cofo.png" title="Toggle Map Mode"></img>
+            </div>
+            <div class="floatBox controler">
+                <div class="seperator">Focus Country</div>
+                <input class="selectCountry" value="type in country name..."></input>
+            </div>
+
+            <div class="floatBox controler">
+                <div class="seperator">Continent</div>
+                <select class="selectContinent">
+                    <option value="AL">All</option>
+                    <option value="AF">Africa</option>
+                    <option value="AN">Antarctica</option>
+                    <option value="AS">Asia</option>
+                    <option value="EU">Europe</option>
+                    <option value="NA">North America</option>
+                    <option value="OC">Oceania</option>
+                    <option value="SA">South America</option>
+                </select>
+            </div>
+            <div class="clearFloat"></div>
+
+
+            <div class="mapControls" style="margin-right:1em;margin-left:1em">
+                <ul>
+                    <li><a href="#tabs-1">Legend</a>
+                    </li>
+                    <li><a href="#tabs-2">Map Projection</a>
+                    </li>
+                    <li><a href="#tabs-3">Metadata</a>
+                    </li>
+                    <li><a href="#tabs-4">Export</a>
+                    </li>
+                    <li><a href="#tabs-5">Help</a>
+                    </li>
+                </ul>
+                <div id="tabs-1">
+                    <div class="legend floatBox"></div>
+                    <div class="floatBox">
+                        <div class="controler filter">
+                            <select class="filterSelect">
+                                <option value="0">No Filter.</option>
+                                <option value="10">Filter: > 10.</option>
+                                <option value="100">Filter: > 100.</option>
+                                <option value="1000">Filter: > 1,000.</option>
+                                <option value="10000">Filter: > 10,000.</option>
+                                <option value="100000">Filter: > 100,000.</option>
+                                <option value="-1">Custom threshold.</option>
+                            </select>
+                        </div>
+                        <div class="clearFloat"></div>
+                        <div class="controler filter customFilter">
+                            <p>Define custom filter.</p>
+                            <div>
+                                <input class="filterInputMin filterThreshold" value="0" type="number" min="0" max="100000"></input>(min)
+                            </div>
+                            <div>
+                                <input class="filterInputMax filterThreshold" value="1000000" type="number" min="0" max="100000"></input>(max)
+                            </div>
+                            <div class="clearFloat"></div>
+                        </div>
+                    </div>
+                    <div class="clearFloat"></div>
+                </div>
+                <div id="tabs-2">
+                    <div class="controler">
+                        <select class="selectProjection">
+                            <option value="azimuthal">Azimuthal Equidistant Projection</option>
+                            <option value="conic">Conic Equidistant Projection</option>
+                            <option value="mercator">Mercator Projection</option>
+                        </select><br><br>
+                        <img class="projectionIcon" src="img/icon-azimuthal.png" title="Azimuthal Equidistant Projection"></img>
+                    </div>
+                </div>
+                <div id="tabs-3">
+                    The UNHCR Refugee database contains data from the year 2000 to 2012; recently, data is available until mid 2013. The available data gives information about the refugees general composition by location of residence or origin, their status (refugees, asylum seekers, internally displaced persons) and their evolution over time. The data is discretionary in a scientific context (<a href="http://www.unhcr.org/45c06c662.html" target="_blank">DATA_SOURCES_AND_PROVIDERS</a>).
+                </div>
+                <div id="tabs-4">
+                    Export Map
+                </div>
+                <div id="tabs-5">
+                    How to use this map?
+                    <p>1) To select a country please click on the one you prefer to get information about or use the drop down list and choose the country you like</p>
+                    <p>2) By sliding over the countries you will get the country name as information</p>
+                    <p>3) In the first diagram in the manual side bar, you get more information about refugees over time of the selected country</p>
+                    <p>4) Use the mousewheel to zoom or click on the zoom button in the manual side bar</p>
+                    <p>5) You can change the migration between - refugees who have left their origin - and the ones who have fled into the country you selected</p>
+                    <p>6) To filter the mass of information and connections between two countries, please use the drop down list and choose the type of migration</p>
+                    <p>7) The time slider shows changes of the number of refugees based on the selected country</p>
+                    <p>8) If you like to get more information about the changes of migration between two time steps click twice on the time slider and choose what you like to compare.</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="controlPanelFooter">
+            <p>Studienprojekt, WS 2013/14 | Master Geoinformation und Visualisierung
+                <br><b>Amelie Stolle, Jonas Buddeberg</b>
+            </p>
+            <div class="floatBox">
+                <img src="img/logo_uni.png" class="logo">
+            </div>
+            <div class="floatBox">
+                <img src="img/logo_geo.png" class="logo">
+            </div>
+            <div class="floatBox">
+                <img src="img/logo_givi.png" class="logo">
+            </div>
+            <div class="floatBox">
+                <a href="http://popstats.unhcr.org/?_ga=1.241727810.1573521083.1384993192" target="_blank">
+                    <img class="logo" src="img/logo_unhcr.png">
+                </a>
+            </div>
+            <div class="clearFloat"></div>
+        </div>
+    </div>
+
+    <div class="yearHud">2005</div>
+
+</body>
+
+</html>

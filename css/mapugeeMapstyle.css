@@ -1,0 +1,49 @@
+.country {
+  stroke: #31373D;
+  stroke-width: 0.5px;
+  stroke-linecap: round; 
+  stroke-linejoin: round;
+  fill: #FEFEFE;
+  opacity: 0.8;
+}
+.country-hover {
+  fill: #FFC16F;
+  stroke-width: 0.5px; 
+}
+
+.country-highlight {
+  stroke: #31373D;
+  stroke-width: 0.5px;
+  stroke-linecap: round; 
+  stroke-linejoin: round;    
+  fill: #39799B;
+  opacity: 1.0;
+}
+
+.country-highlight-2 {
+  stroke: #31373D;
+  stroke-width: 0.5px;
+  stroke-linecap: round; 
+  stroke-linejoin: round;  
+  fill: #FFFFFF;
+}
+
+.graticule {
+  fill: none;
+  stroke: #7E8285;
+  stroke-width: .5px;
+  stroke-opacity: 0.3;
+}
+
+.route {
+  fill: none;
+  opacity: 1.0;
+} 
+
+.points {
+  fill: #A66814;
+  stroke: #FFAD3F;
+  stroke-width: 0.9px;
+  radius:1px;
+}
+
