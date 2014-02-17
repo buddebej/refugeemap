@@ -14,7 +14,7 @@ var Mapugee = function(mapContainer) {
     _PATH = d3.geo.path().projection(_PROJECTION[_PROJECTION.state]), // set Projection
     _SVG = d3.select(mapContainer).insert('svg', '.shadow').attr('width', _width).attr('height', _height), // insert Map to container-div    
     _FEATURES = _SVG.append('g'), // get D3-Handler
-    _DB_PATH = 'http://boeppe.eu/mapugee/v4/data/dbrequest.php', // url to ajax/postgis interface    
+    _DB_PATH = 'http://mapugee.boeppe.eu/data/dbrequest.php', // url to ajax/postgis interface    
     _ZOOM_MIN = 0.2, // min zoom level
     _ZOOM_MAX = 1.6, // max zoom level
     _UI, // pointer to userinterface
@@ -149,7 +149,7 @@ var Mapugee = function(mapContainer) {
     loadingAnimation.fadeIn();
 
     for (var i = 2001; i < 2013; i += 1) {
-      $.getJSON(_DB_PATH + '?year=' + i + '&' + mode + '=\'' + coiCode + '\'&continent=\'' + _continent + '\'', function(data) {
+      $.getJSON(_DB_PATH + '?year=' + i + '&' + mode + '=' + coiCode + '&continent=' + _continent + '', function(data) {
         var arrows = {}, queryYear;
 
         $.each(data.features, function(key, feature) {
@@ -307,7 +307,6 @@ var Mapugee = function(mapContainer) {
     cleanMap = function() {
       deleteAllArrows();
       unHighlightCountries(); // clean up
-      deletePointMarker(); // delete all old point markers in other countries
     },
     drawFlowMap = function() {
       fadeOutFlowArrows();
@@ -323,8 +322,7 @@ var Mapugee = function(mapContainer) {
 
     },
     rotateTo = function(coiCode) {
-      var proj = proj;
-      $.getJSON(_DB_PATH + '?country=\'' + coiCode + '\'', function(data) {
+      $.getJSON(_DB_PATH + '?country=' + coiCode, function(data) {
         var destXY;
         $.each(data.features, function(key, feature) {
           destXY = {
@@ -342,12 +340,10 @@ var Mapugee = function(mapContainer) {
       loadingAnimation.fadeOut();
     },
     setProjection = function(proj) {
-      cleanMap();
       _PATH = d3.geo.path().projection(_PROJECTION[proj]);
       _PROJECTION.state = proj;
       rotateTo(_coi);
-      _SVG.selectAll('path').transition().duration(100).attr('d', _PATH);
-      drawFlowMap();
+      _SVG.selectAll('path').transition.attr('d', _PATH);
     },
     selectNewCountryClick = function() {
       selectNewCountry(d3.select(this).data()[0].id);
@@ -511,9 +507,6 @@ var Mapugee = function(mapContainer) {
       d3.selectAll('.route').remove();
       d3.selectAll('.toDelete').remove();
       d3.selectAll('.route-hover').remove();
-    },
-    deletePointMarker = function() {
-      d3.selectAll('.points').remove();
     },
     fadeOutFlowArrows = function() {
       d3.selectAll('.route')
