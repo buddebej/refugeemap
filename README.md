@@ -11,4 +11,4 @@ Use grunt to build a working copy.
 
 A working demo is available [here](http://mapugee.boeppe.eu/)
 
-![Screenshots](http://mapugee.boeppe.eu/screenshot01.png) 
+![Screenshots](https://raw.github.com/buddebej/refugeemap/master/screenshots/screenshot01.png) 
