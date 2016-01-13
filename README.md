@@ -17,6 +17,4 @@ Features at current stage:
  * Different map-projections.
  * Animation with adjustable speed.
 
-Best performance in a recent version of chrome.
-
 ![Screenshots](https://raw.github.com/buddebej/refugeemap/master/screenshots/screenshot01.png) 
