@@ -18,6 +18,5 @@ Features at current stage:
  * Animation with adjustable speed.
 
 Best performance in a recent version of chrome.
-A working demo is available [here](http://mapugee.boeppe.eu/)
 
 ![Screenshots](https://raw.github.com/buddebej/refugeemap/master/screenshots/screenshot01.png) 
